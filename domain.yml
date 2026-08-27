@@ -1,0 +1,83 @@
+version: "3.1"
+
+# 1. INTENTS : Ce que l'utilisateur cherche à exprimer/faire
+intents:
+  - greet                 # Salutations (bonjour, salut...)
+  - goodbye               # Au revoir
+  - got_problem           # J'ai un problème simple
+  - ask_create_ticket     # Création de Ticket GLPI
+  - submit_problem        # Soumission du problème
+  - affirm                # Confirmation
+  - affirm_general        # Confirmation générale (utilisé dans rules.yml)
+  - deny                  # Infirmation
+  - thank                 # Remerciements
+
+# 2. SLOTS : Mémoire du chatbot pendant la conversation
+slots:
+  user_name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  solution_step:
+    type: float
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  tried_solutions:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  user_problem_description:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+# 3. ACTIONS : Fonctions dynamiques exécutées dans actions/actions.py
+actions:
+  - action_greet_user
+  - action_handle_problem_step
+  - action_reset_slots
+  - action_create_glpi_ticket
+
+# 4. RESPONSES : Messages pré-rédigés
+responses:
+  utter_greet:
+    - text: "Bonjour ! Je suis l'assistant support. Quel est le problème que vous rencontrez ?"
+    - text: "Bonjour ! Comment puis-je vous aider aujourd'hui ?"
+
+  utter_got_problem:
+    - text: "D'accord, de quel problème s'agit-il ?"
+    - text: "Je vous écoute, de quel problème s'agit-il ?"
+
+  utter_ask_ticket_description:
+    - text: "Veuillez décrire brièvement votre problème pour que je puisse créer le ticket GLPI : "
+
+  utter_ask_problem:
+    - text: "Pouvez-vous me décrire plus en détail votre problème ?"
+
+  utter_ask_if_resolved:
+    - text: "Est-ce que cette solution a résolu votre problème ?"
+    - text: "Est-ce que cela fonctionne à présent ?"
+
+  utter_resolution_succes:
+    - text: "Parfait ! Je suis ravi qu'une des solutions ait pu résoudre votre problème. N'hésitez pas si vous avez d'autres questions !"
+
+  utter_success_goodbye:
+    - text: "Ravi d'avoir pu vous aider ! Je reste à votre disposition si vous avez d'autres questions. Excellente journée !"
+    - text: "Parfait ! Je suis content que votre problème soit résolu. N'hésitez pas à me recontacter au besoin. Passez une très bonne journée !"
+
+  utter_goodbye:
+    - text: "De rien ! N'hésitez pas si vous avez d'autres demandes. Bonne journée !"
+
+  utter_default_fallback:
+    - text: "J'ai du mal à comprendre votre message, pouvez-vous le reformuler s'il vous plaît ?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

@@ -1,0 +1,41 @@
+# Configuration for Rasa NLU.
+# https://rasa.com/docs/rasa/model-configuration/
+recipe: default.v1
+
+# Définition de la langue
+language: fr
+
+# Pipeline NLU : Traitement et compréhension du texte
+pipeline:
+  - name: WhitespaceTokenizer            # Sépare les mots par les espaces
+  - name: RegexFeaturizer                # Recherche de motifs/expressions régulières
+  - name: LexicalSyntacticFeaturizer     # Analyse la syntaxe
+  - name: CountVectorsFeaturizer         # Compte la fréquence des mots entiers
+  - name: CountVectorsFeaturizer         # Analyse les sous-mots (tolérance aux fautes d'orthographe)
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier                 # Algorithme principal d'intention et d'entités
+    epochs: 100
+    constrain_similarities: true
+  - name: EntitySynonymMapper            # Gère la correspondance des synonymes
+  - name: ResponseSelector               # Gère les questions/réponses secondaires
+    epochs: 100
+    constrain_similarities: true
+  - name: FallbackClassifier             # Gère les   phrases non reconnues
+    threshold: 0.85                       # Si le score de confiance est < 85%, déclenche nlu_fallback
+    ambiguity_threshold: 0.1             # Écarte les hésitations entre deux intents trop proches
+
+# Policies : Choix de la prochaine action
+policies:
+  - name: MemoizationPolicy
+  - name: RulePolicy
+    core_fallback_threshold: 0.4
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: true
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
+
+assistant_id: 20260804-125558-juvenile-scrub

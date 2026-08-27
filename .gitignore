@@ -1,0 +1,14 @@
+# Cache Rasa & modèles lourds
+.rasa/
+models/
+
+# Environnement virtuel Python
+venv/
+.venv/
+env/
+
+# Cache Python et IDE
+__pycache__/
+*.pyc
+.vscode/
+.idea/

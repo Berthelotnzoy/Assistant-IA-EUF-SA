@@ -1,0 +1,41 @@
+version: "3.1"
+
+stories:
+
+# PARCOURS 1 : L'utilisateur teste les solutions mais tout échoue (Escalade GLPI)
+- story: Echec des solutions et création de ticket
+  steps:
+  - intent: declarer_probleme
+  - action: action_handle_problem_step     # Propose la Solution 1 (step = 1)
+  - intent: deny                           # L'utilisateur dit "Non"
+  - action: action_handle_problem_step     # Propose la Solution 2 (step = 2)
+  - intent: deny                           # L'utilisateur dit "Non" à nouveau
+  - action: action_handle_problem_step     # Déclenche l'échec final
+
+# PARCOURS 2 : La première solution fonctionne
+- story: Succès dès la premiere solution
+  steps:
+  - intent: declarer_probleme
+  - action: action_handle_problem_step     # Propose la Solution 1
+  - intent: affirm                         # L'utilisateur dit "Oui" / "Ça marche"
+  - action: utter_resolution_succes        # Le bot dit : "Super, ravi d'avoir pu aider !"
+  - action: action_reset_slots             # Remet la mémoire du bot à zéro
+
+# PARCOURS 3 : La deuxième solution fonctionne
+- story: Succès à la deuxième solution
+  steps:
+  - intent: declarer_probleme
+  - action: action_handle_problem_step     # Propose la Solution 1
+  - intent: deny                           # L'utilisateur dit "Non"
+  - action: action_handle_problem_step     # Propose la Solution 2
+  - intent: affirm                         # L'utilisateur dit "Oui"
+  - action: utter_resolution_succes        # Le bot dit : "Super, ravi d'avoir pu aider !"
+  - action: action_reset_slots             # Remet la mémoire du bot à zéro
+
+# PARCOURS 4 : Demande directe de création de ticket sans passer par le dépannage
+- story: Demande directe de ticket puis description du problème
+  steps:
+  - intent: demander_creation_ticket
+  - action: utter_ask_ticket_description
+  - intent: declarer_probleme
+  - action: action_handle_problem_step     # Détecte la demande directe et crée le ticket

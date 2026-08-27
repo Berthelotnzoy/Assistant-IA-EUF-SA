@@ -1,0 +1,51 @@
+version: "3.1"
+
+rules:
+
+  # 1. Règle absolue pour tout message non compris / charabia
+  - rule: Fallback automatique sur message non compris
+    steps:
+      - intent: nlu_fallback
+      - action: utter_default_fallback
+
+  # 2. Salutation (Ajout d'une condition d'intention explicite)
+  - rule: Repondre aux salutations
+    steps:
+      - intent: greet
+      - action: action_greet_user
+
+  # 3. Demande explicite de création de ticket
+  - rule: Demande directe de creation de ticket
+    steps:
+      - intent: ask_create_ticket
+      - action: utter_ask_ticket_description
+
+  # 4. Prise en charge de la demande initiale
+  - rule: Repondre a j ai un soucis
+    steps:
+      - intent: got_problem
+      - action: utter_got_problem
+
+  # 5. Traitement de la description du problème
+  - rule: Traiter la description d un probleme
+    steps:
+      - intent: submit_problem
+      - action: action_handle_problem_step
+
+  # 6. Acquiescement
+  - rule: Acquiescement
+    steps:
+      - intent: affirm_general
+      - action: utter_goodbye
+
+  # 7. Au revoir
+  - rule: Repondre au revoir
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  # 8. Remerciements
+  - rule: Repondre aux remerciements
+    steps:
+      - intent: thank
+      - action: utter_success_goodbye

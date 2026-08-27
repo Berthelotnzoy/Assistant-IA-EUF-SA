@@ -1,0 +1,105 @@
+version: "3.1"
+
+nlu:
+# 1. SALUTATIONS
+- intent: greet
+  examples: |
+     - bonjour
+     - bonsoir
+     - salut
+     - hello
+     - coucou
+     - bonjour benzoy
+     - bonsoir benzoy
+     - salut benzoy
+     - j'ai un problème
+     - j'ai un soucis
+
+# 2. FIN DE CONVERSATION / AU REVOIR
+- intent: goodbye
+  examples: |
+    - au revoir
+    - bonne journée
+    - a plus tard
+    - c'est tout pour moi au revoir
+    - merci au revoir
+    - bonne fin de journée
+
+# 3. CONFIRMATION (La solution a fonctionné)
+- intent: affirm
+  examples: |
+    - oui
+    - oui c'est bon
+    - ca marche
+    - ça a fonctionné
+    - parfait merci
+    - c'est réglé
+    - oui le problème est résolu
+    - super ça fonctionne à nouveau
+    - nickel
+    - oui merci pour votre aide
+
+# 4. INFIRMATION (La solution n'a PAS fonctionné)
+- intent: deny
+  examples: |
+    - non
+    - non ça ne marche pas
+    - toujours pas
+    - ça n'a rien changé
+    - le problème persiste
+    - non toujours le même problème
+    - ça n'a pas fonctionné
+    - non c'est pareil
+    - négatif
+    - non toujours rien
+
+# 5. CREATION D'UN TICKET GLPI
+- intent: ask_create_ticket
+  examples: |
+    - je veux créer un ticket
+    - j'aimerais ouvrir un ticket
+    - créer un ticket de support
+    - je veux faire une demande de ticket
+    - ouverture de ticket
+    - enregistrer un ticket
+
+# 6. SOUMISSION DU PROBLÈME
+- intent: got_problem
+  examples: |
+    - j'ai un problème
+    - J'ai un gros problème là actuellement
+    - ça va cuir sur moi, aide-moi
+    - j'ai un très grand soucis actuellement
+    - je n'arrive pas à travailler depuis ce matin
+    - j'ai un soucis
+    - j'ai des problèmes
+    - j'ai des soucis
+
+- intent: affirm_general
+  examples: |
+    - d'accord
+    - ok
+    - tres bien
+    - entendu
+    - merci
+
+- intent: submit_problem
+  examples: |
+    - j'ai un problème avec mon écran
+    - mon pc ne s'allume plus
+    - je n'arrive pas à me connecter à internet
+    - mon mot de passe glpi ne marche plus
+    - mon imprimante ne répond pas
+    - j'ai une erreur au lancement de l'application
+    - l'ordinateur est très lent
+    - je n'ai plus accès à mon réseau
+    - impossible d'ouvrir ma session
+    - ma connexion wifi est coupée
+
+# 7. REMERCIEMENTS
+- intent: thank
+  examples: |
+    - merci
+    - merci beaucoup
+    - super merci
+    - merci pour votre aide
