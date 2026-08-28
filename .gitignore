@@ -1,6 +1,6 @@
 # Cache Rasa & modèles lourds
-.rasa/
 models/
+.rasa/
 
 # Environnement virtuel Python
 venv/
